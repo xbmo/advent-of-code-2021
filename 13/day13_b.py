@@ -10,9 +10,6 @@ numRows = 0
 
 readingGrid = True
 
-maxX = 0
-maxY = 0
-
 while True:
     line = fileData.readline()
     if line:
@@ -26,11 +23,6 @@ while True:
             positionSplit = line.split(",")
             x = int(positionSplit[0])
             y = int(positionSplit[1])
-
-            if x > maxY:
-                maxX = x
-            if y > maxY:
-                maxY = y
 
             positionsList.append((x, y))
         else:
@@ -90,11 +82,22 @@ for i in range(len(foldsList)):
 
 print("number of positions = " + str(len(positionsList)))
 
+maxX = 0
+maxY = 0
+
+for i in range(len(positionsList)):
+    if positionsList[i][0] > maxX:
+        maxX = positionsList[i][0]
+    if positionsList[i][1] > maxY:
+        maxY = positionsList[i][1]
+
+#this could be output to a console, but it's easier to read in a file
 outputFile = open("output.txt", "w")
 
-for y in range(maxY):
+#draw the grid so that the eight letters we're looking for are written out
+for y in range(maxY + 1):
     lineString = ""
-    for x in range(maxX):
+    for x in range(maxX + 1):
         positionTuple = (x, y)
         if positionTuple in positionsList:
             lineString += "#"
